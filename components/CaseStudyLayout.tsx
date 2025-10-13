@@ -157,22 +157,24 @@ export default function CaseStudyLayout({
               </a>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Screenshots Column */}
-              <div>
-                <div className="sticky top-24">
-                  <div className="space-y-4">
+            <div className="space-y-8">
+              {/* Horizontal Screenshot Gallery */}
+              <div className="relative">
+                <div className="overflow-x-auto pb-4 scrollbar-hide">
+                  <div className="flex gap-4">
                     {sections
                       .find((s) => s.id === activeSection)
                       ?.screenshots.map((screenshot, idx) => (
                         <div
                           key={idx}
-                          className="overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-blue-50 to-purple-50 p-8 shadow-sm"
+                          className="flex-shrink-0 w-80"
                         >
-                          <div className="flex h-[600px] items-center justify-center">
-                            <div className="text-center text-gray-400">
-                              <div className="mb-2 text-sm font-medium">Screenshot {idx + 1}</div>
-                              <div className="text-xs">{screenshot}</div>
+                          <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-blue-50 to-purple-50 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+                            <div className="aspect-[9/19.5] flex items-center justify-center p-8">
+                              <div className="text-center text-gray-400">
+                                <div className="mb-2 text-sm font-medium">Screenshot {idx + 1}</div>
+                                <div className="text-xs">{screenshot}</div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -181,8 +183,8 @@ export default function CaseStudyLayout({
                 </div>
               </div>
 
-              {/* Analysis Column */}
-              <div>
+              {/* Analysis Section */}
+              <div className="bg-white rounded-2xl border border-gray-200 p-8">
                 <div className="prose prose-gray max-w-none">
                   {analysis[activeSection] || (
                     <div className="text-gray-500">No analysis available for this section.</div>
