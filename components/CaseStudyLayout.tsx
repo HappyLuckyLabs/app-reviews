@@ -161,24 +161,26 @@ export default function CaseStudyLayout({
                 </div>
               </div>
 
-              {/* Right Panel - Screenshots */}
-              <div className="w-[480px] flex-shrink-0 overflow-y-auto bg-gray-50 p-8">
-                <div className="space-y-6">
-                  {sections
-                    .find((s) => s.id === activeSection)
-                    ?.screenshots.map((screenshot, idx) => (
-                      <div key={idx} className="group">
-                        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-blue-50 to-purple-50 shadow-sm hover:shadow-md transition-all cursor-pointer">
-                          <div className="aspect-[9/19.5] flex items-center justify-center p-8">
-                            <div className="text-center text-gray-400">
-                              <div className="mb-2 text-sm font-medium">Screenshot {idx + 1}</div>
-                              <div className="text-xs">{screenshot}</div>
+              {/* Right Panel - Screenshots (Horizontal Scroll) */}
+              <div className="w-[640px] flex-shrink-0 bg-gray-50">
+                <div className="h-full overflow-x-auto overflow-y-hidden scrollbar-hide p-8">
+                  <div className="flex gap-4 h-full items-start">
+                    {sections
+                      .find((s) => s.id === activeSection)
+                      ?.screenshots.map((screenshot, idx) => (
+                        <div key={idx} className="flex-shrink-0 w-60">
+                          <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-blue-50 to-purple-50 shadow-sm hover:shadow-md transition-all cursor-pointer">
+                            <div className="aspect-[9/19.5] flex items-center justify-center p-6">
+                              <div className="text-center text-gray-400">
+                                <div className="mb-2 text-xs font-medium">Screenshot {idx + 1}</div>
+                                <div className="text-[10px]">{screenshot}</div>
+                              </div>
                             </div>
                           </div>
+                          <div className="mt-2 text-[10px] text-gray-500 text-center px-2">{screenshot}</div>
                         </div>
-                        <div className="mt-2 text-xs text-gray-500 text-center">{screenshot}</div>
-                      </div>
-                    ))}
+                      ))}
+                  </div>
                 </div>
               </div>
             </>
