@@ -11,13 +11,68 @@ export async function generateStaticParams() {
 
 // Example sections - you'll customize these per case study
 const getSections = (slug: string) => {
-  // Default sections for all case studies
+  // Default sections for all case studies with more screenshots to demo scrolling
   return [
-    { id: 'overview', label: 'Overview & Store', screenshots: ['App Store Screenshots', 'Marketing Visuals'] },
-    { id: 'onboarding', label: 'Onboarding', screenshots: ['Welcome Screen', 'Signup Flow', 'Permissions'] },
-    { id: 'home', label: 'Home & Navigation', screenshots: ['Home Screen', 'Navigation', 'Menu'] },
-    { id: 'features', label: 'Core Features', screenshots: ['Feature 1', 'Feature 2', 'Feature 3'] },
-    { id: 'monetization', label: 'Monetization', screenshots: ['Paywall', 'Pricing', 'Upgrade Flow'] },
+    {
+      id: 'overview',
+      label: 'Overview & Store',
+      screenshots: [
+        'App Store Header',
+        'App Store Screenshots 1',
+        'App Store Screenshots 2',
+        'Marketing Visual 1',
+        'Marketing Visual 2',
+        'App Icon & Branding'
+      ]
+    },
+    {
+      id: 'onboarding',
+      label: 'Onboarding',
+      screenshots: [
+        'Welcome Screen',
+        'Value Proposition',
+        'Signup Flow Step 1',
+        'Signup Flow Step 2',
+        'Permission Request',
+        'Setup Complete'
+      ]
+    },
+    {
+      id: 'home',
+      label: 'Home & Navigation',
+      screenshots: [
+        'Home Screen',
+        'Navigation Drawer',
+        'Bottom Nav',
+        'Menu Options',
+        'Search Interface',
+        'Profile View'
+      ]
+    },
+    {
+      id: 'features',
+      label: 'Core Features',
+      screenshots: [
+        'Feature 1 Overview',
+        'Feature 1 In Use',
+        'Feature 2 Overview',
+        'Feature 2 Settings',
+        'Feature 3 Overview',
+        'Feature 3 Results'
+      ]
+    },
+    {
+      id: 'monetization',
+      label: 'Monetization',
+      screenshots: [
+        'Paywall Screen',
+        'Pricing Options',
+        'Feature Comparison',
+        'Upgrade CTA',
+        'Purchase Flow',
+        'Success Confirmation'
+      ]
+    },
   ]
 }
 
