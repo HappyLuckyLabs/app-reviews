@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 import { getCaseStudyBySlug, getCaseStudies } from '@/lib/mdx'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import { createClient } from '@/lib/supabase/server'
 import CaseStudyLayout from '@/components/CaseStudyLayout'
 
@@ -10,7 +9,7 @@ export async function generateStaticParams() {
 }
 
 // Example sections - you'll customize these per case study
-const getSections = (slug: string) => {
+const getSections = () => {
   // Default sections for all case studies with more screenshots to demo scrolling
   return [
     {
@@ -76,92 +75,6 @@ const getSections = (slug: string) => {
   ]
 }
 
-// Analysis content for each section
-const getAnalysis = (content: string) => {
-  return {
-    overview: (
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Business Overview</h2>
-        <div className="space-y-4 text-gray-700">
-          <p>
-            This section covers the app&apos;s positioning in the market, business model, and overall strategy.
-          </p>
-          <h3 className="text-xl font-semibold text-gray-900 mt-6">Key Insights</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li>Market positioning and target audience</li>
-            <li>Revenue model and pricing strategy</li>
-            <li>Competitive advantages</li>
-          </ul>
-        </div>
-      </div>
-    ),
-    onboarding: (
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Onboarding Experience</h2>
-        <div className="space-y-4 text-gray-700">
-          <p>
-            How the app introduces itself to new users and guides them through the initial setup.
-          </p>
-          <h3 className="text-xl font-semibold text-gray-900 mt-6">UX Breakdown</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li>Progressive disclosure of features</li>
-            <li>Permission requests and timing</li>
-            <li>Value proposition communication</li>
-          </ul>
-        </div>
-      </div>
-    ),
-    home: (
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Home & Navigation</h2>
-        <div className="space-y-4 text-gray-700">
-          <p>
-            The main interface where users spend most of their time.
-          </p>
-          <h3 className="text-xl font-semibold text-gray-900 mt-6">Design Patterns</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li>Information architecture</li>
-            <li>Navigation patterns</li>
-            <li>Content prioritization</li>
-          </ul>
-        </div>
-      </div>
-    ),
-    features: (
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Core Features</h2>
-        <div className="space-y-4 text-gray-700">
-          <p>
-            Deep dive into the app&apos;s main functionality and user workflows.
-          </p>
-          <h3 className="text-xl font-semibold text-gray-900 mt-6">Feature Analysis</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li>User flows and interactions</li>
-            <li>Feature discoverability</li>
-            <li>Engagement loops</li>
-          </ul>
-        </div>
-      </div>
-    ),
-    monetization: (
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Monetization Strategy</h2>
-        <div className="space-y-4 text-gray-700">
-          <p>
-            How the app converts users into paying customers.
-          </p>
-          <h3 className="text-xl font-semibold text-gray-900 mt-6">Conversion Tactics</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li>Paywall positioning and timing</li>
-            <li>Pricing psychology</li>
-            <li>Value demonstration</li>
-          </ul>
-        </div>
-      </div>
-    ),
-  }
-}
-
 export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const caseStudy = await getCaseStudyBySlug(slug)
@@ -194,8 +107,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     }
   }
 
-  const sections = getSections(slug)
-  const analysis = getAnalysis(caseStudy.content)
+  const sections = getSections()
 
   return (
     <CaseStudyLayout
@@ -212,7 +124,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         onboardingSteps: caseStudy.onboardingSteps,
       }}
       sections={sections}
-      analysis={analysis}
       hasAccess={hasAccess}
     />
   )

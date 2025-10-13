@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Lock } from 'lucide-react'
+import { CaseStudyAnalysis } from './CaseStudyAnalysis'
 
 interface Section {
   id: string
@@ -23,19 +24,42 @@ interface CaseStudyLayoutProps {
     onboardingSteps?: number
   }
   sections: Section[]
-  analysis: {
-    [sectionId: string]: React.ReactNode
-  }
   hasAccess: boolean
+}
+
+// ScreenTag component for linking to screenshots
+export function ScreenTag({ index, onClick }: { index: number; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 hover:bg-blue-200 transition-colors cursor-pointer"
+    >
+      Screen {index + 1}
+    </button>
+  )
 }
 
 export default function CaseStudyLayout({
   metadata,
   sections,
-  analysis,
   hasAccess,
 }: CaseStudyLayoutProps) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id || '')
+  const screenshotRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  const scrollToScreenshot = (sectionId: string, screenshotIndex: number) => {
+    const key = `${sectionId}-${screenshotIndex}`
+    const element = screenshotRefs.current[key]
+
+    if (element && scrollContainerRef.current) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      })
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -155,20 +179,34 @@ export default function CaseStudyLayout({
               {/* Left Panel - Analysis */}
               <div className="flex-1 overflow-y-auto border-r border-gray-200 bg-white p-8">
                 <div className="prose prose-gray max-w-none">
-                  {analysis[activeSection] || (
-                    <div className="text-gray-500">No analysis available for this section.</div>
-                  )}
+                  <CaseStudyAnalysis
+                    sectionId={activeSection}
+                    scrollToScreenshot={(idx) => scrollToScreenshot(activeSection, idx)}
+                  />
                 </div>
               </div>
 
               {/* Right Panel - Screenshots (Horizontal Scroll) */}
               <div className="w-[640px] flex-shrink-0 bg-gray-50">
-                <div className="h-full overflow-x-auto overflow-y-hidden scrollbar-hide p-8">
+                <div
+                  ref={scrollContainerRef}
+                  className="h-full overflow-x-auto overflow-y-hidden p-8"
+                  style={{
+                    scrollbarWidth: 'thin',
+                    scrollbarColor: '#cbd5e1 #f1f5f9'
+                  }}
+                >
                   <div className="flex gap-4 h-full items-start">
                     {sections
                       .find((s) => s.id === activeSection)
                       ?.screenshots.map((screenshot, idx) => (
-                        <div key={idx} className="flex-shrink-0 w-60">
+                        <div
+                          key={idx}
+                          ref={(el) => {
+                            screenshotRefs.current[`${activeSection}-${idx}`] = el
+                          }}
+                          className="flex-shrink-0 w-60"
+                        >
                           <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-blue-50 to-purple-50 shadow-sm hover:shadow-md transition-all cursor-pointer">
                             <div className="aspect-[9/19.5] flex items-center justify-center p-6">
                               <div className="text-center text-gray-400">
