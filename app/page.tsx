@@ -1,12 +1,12 @@
 import Hero from '@/components/Hero'
 import CaseStudyCard from '@/components/CaseStudyCard'
-import { getFreeCaseStudies, getLockedCaseStudies } from '@/lib/mdx'
+import { getFreeCaseStudiesFromDB, getLockedCaseStudiesFromDB } from '@/lib/case-studies-db'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 export default async function Home() {
-  const freeCaseStudies = await getFreeCaseStudies()
-  const lockedCaseStudies = await getLockedCaseStudies()
+  const freeCaseStudies = await getFreeCaseStudiesFromDB()
+  const lockedCaseStudies = await getLockedCaseStudiesFromDB()
 
   return (
     <div className="min-h-screen bg-white">

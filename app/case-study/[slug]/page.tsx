@@ -1,90 +1,33 @@
 import { notFound } from 'next/navigation'
-import { getCaseStudyBySlug, getCaseStudies } from '@/lib/mdx'
+import { getCaseStudyBySlugFromDB, getCaseStudiesFromDB } from '@/lib/case-studies-db'
 import { createClient } from '@/lib/supabase/server'
 import CaseStudyLayout from '@/components/CaseStudyLayout'
 
 export async function generateStaticParams() {
-  const caseStudies = await getCaseStudies()
-  return caseStudies.map((cs) => ({ slug: cs.slug }))
-}
+  // Only generate static params if database is available
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    return []
+  }
 
-// Example sections - you'll customize these per case study
-const getSections = () => {
-  // Default sections for all case studies with more screenshots to demo scrolling
-  return [
-    {
-      id: 'overview',
-      label: 'Overview & Store',
-      screenshots: [
-        'App Store Header',
-        'App Store Screenshots 1',
-        'App Store Screenshots 2',
-        'Marketing Visual 1',
-        'Marketing Visual 2',
-        'App Icon & Branding'
-      ]
-    },
-    {
-      id: 'onboarding',
-      label: 'Onboarding',
-      screenshots: [
-        'Welcome Screen',
-        'Value Proposition',
-        'Signup Flow Step 1',
-        'Signup Flow Step 2',
-        'Permission Request',
-        'Setup Complete'
-      ]
-    },
-    {
-      id: 'home',
-      label: 'Home & Navigation',
-      screenshots: [
-        'Home Screen',
-        'Navigation Drawer',
-        'Bottom Nav',
-        'Menu Options',
-        'Search Interface',
-        'Profile View'
-      ]
-    },
-    {
-      id: 'features',
-      label: 'Core Features',
-      screenshots: [
-        'Feature 1 Overview',
-        'Feature 1 In Use',
-        'Feature 2 Overview',
-        'Feature 2 Settings',
-        'Feature 3 Overview',
-        'Feature 3 Results'
-      ]
-    },
-    {
-      id: 'monetization',
-      label: 'Monetization',
-      screenshots: [
-        'Paywall Screen',
-        'Pricing Options',
-        'Feature Comparison',
-        'Upgrade CTA',
-        'Purchase Flow',
-        'Success Confirmation'
-      ]
-    },
-  ]
+  try {
+    const caseStudies = await getCaseStudiesFromDB()
+    return caseStudies.map((cs) => ({ slug: cs.slug }))
+  } catch (error) {
+    console.error('Error generating static params:', error)
+    return []
+  }
 }
 
 export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const caseStudy = await getCaseStudyBySlug(slug)
+  const caseStudy = await getCaseStudyBySlugFromDB(slug)
 
   if (!caseStudy) {
     notFound()
   }
 
   // Check if user has access
-  let hasAccess = caseStudy.isFree
+  let hasAccess = caseStudy.is_free
 
   if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     try {
@@ -107,7 +50,12 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
     }
   }
 
-  const sections = getSections()
+  // Map database sections to component format
+  const sections = caseStudy.sections?.map(section => ({
+    id: section.section_id,
+    label: section.section_label,
+    screenshots: section.screenshots?.map(s => s.title) || []
+  })) || []
 
   return (
     <CaseStudyLayout
@@ -116,14 +64,15 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
         category: caseStudy.category,
         revenue: caseStudy.revenue,
         downloads: caseStudy.downloads,
-        founderType: caseStudy.founderType,
-        businessModel: caseStudy.businessModel,
-        rating: caseStudy.rating,
-        appIcon: caseStudy.appIcon,
-        developer: caseStudy.developer,
-        onboardingSteps: caseStudy.onboardingSteps,
+        founderType: caseStudy.founder_type,
+        businessModel: caseStudy.business_model,
+        rating: caseStudy.rating || undefined,
+        appIcon: caseStudy.app_icon || undefined,
+        developer: caseStudy.developer || undefined,
+        onboardingSteps: caseStudy.onboarding_steps || undefined,
       }}
       sections={sections}
+      caseStudySections={caseStudy.sections || []}
       hasAccess={hasAccess}
     />
   )

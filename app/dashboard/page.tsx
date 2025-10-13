@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import { getCaseStudies } from '@/lib/mdx'
+import { getCaseStudiesFromDB } from '@/lib/case-studies-db'
 import CaseStudyCard from '@/components/CaseStudyCard'
 
 export default async function DashboardPage() {
@@ -25,7 +25,7 @@ export default async function DashboardPage() {
     redirect('/pricing')
   }
 
-  const allCaseStudies = await getCaseStudies()
+  const allCaseStudies = await getCaseStudiesFromDB()
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">

@@ -2,12 +2,18 @@
 
 import { useState, useRef } from 'react'
 import { Lock } from 'lucide-react'
-import { CaseStudyAnalysis } from './CaseStudyAnalysis'
+import { CaseStudyAnalysisDynamic } from './CaseStudyAnalysisDynamic'
+import type { Database } from '@/lib/types/database'
 
 interface Section {
   id: string
   label: string
   screenshots: string[]
+}
+
+type DBSection = Database['public']['Tables']['case_study_sections']['Row'] & {
+  accordions: Database['public']['Tables']['section_accordions']['Row'][]
+  screenshots: Database['public']['Tables']['case_study_screenshots']['Row'][]
 }
 
 interface CaseStudyLayoutProps {
@@ -24,6 +30,7 @@ interface CaseStudyLayoutProps {
     onboardingSteps?: number
   }
   sections: Section[]
+  caseStudySections: DBSection[]
   hasAccess: boolean
 }
 
@@ -42,6 +49,7 @@ export function ScreenTag({ index, onClick }: { index: number; onClick: () => vo
 export default function CaseStudyLayout({
   metadata,
   sections,
+  caseStudySections,
   hasAccess,
 }: CaseStudyLayoutProps) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id || '')
@@ -179,8 +187,9 @@ export default function CaseStudyLayout({
               {/* Left Panel - Analysis */}
               <div className="flex-1 overflow-y-auto border-r border-gray-200 bg-white p-8">
                 <div className="prose prose-gray max-w-none">
-                  <CaseStudyAnalysis
+                  <CaseStudyAnalysisDynamic
                     sectionId={activeSection}
+                    caseStudySections={caseStudySections}
                     scrollToScreenshot={(idx) => scrollToScreenshot(activeSection, idx)}
                   />
                 </div>

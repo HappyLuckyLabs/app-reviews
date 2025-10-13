@@ -1,9 +1,11 @@
 import Link from 'next/link'
-import { CaseStudyMetadata } from '@/lib/types'
 import { Lock, TrendingUp, Download } from 'lucide-react'
+import type { Database } from '@/lib/types/database'
+
+type CaseStudy = Database['public']['Tables']['case_studies']['Row']
 
 interface CaseStudyCardProps {
-  caseStudy: CaseStudyMetadata
+  caseStudy: CaseStudy
   isLocked?: boolean
 }
 
@@ -20,9 +22,9 @@ export default function CaseStudyCard({ caseStudy, isLocked = false }: CaseStudy
 
       <div className="p-6">
         {/* App Icon */}
-        {caseStudy.appIcon && (
+        {caseStudy.app_icon && (
           <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 text-2xl font-bold text-white">
-            {caseStudy.appIcon}
+            {caseStudy.app_icon}
           </div>
         )}
 
@@ -55,10 +57,10 @@ export default function CaseStudyCard({ caseStudy, isLocked = false }: CaseStudy
         {/* Tags */}
         <div className="mt-4 flex flex-wrap gap-2">
           <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
-            {caseStudy.businessModel}
+            {caseStudy.business_model}
           </span>
           <span className="rounded-full bg-purple-50 px-3 py-1 text-xs font-medium text-purple-700">
-            {caseStudy.founderType}
+            {caseStudy.founder_type}
           </span>
         </div>
       </div>
