@@ -2,17 +2,27 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 
 export default async function Header() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
+  let user = null
   let subscriptionStatus = 'free'
-  if (user) {
-    const { data: userData } = await supabase
-      .from('users')
-      .select('subscription_status')
-      .eq('id', user.id)
-      .single()
-    subscriptionStatus = userData?.subscription_status || 'free'
+
+  // Only try to get user if Supabase is configured
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    try {
+      const supabase = await createClient()
+      const { data: { user: authUser } } = await supabase.auth.getUser()
+      user = authUser
+
+      if (user) {
+        const { data: userData } = await supabase
+          .from('users')
+          .select('subscription_status')
+          .eq('id', user.id)
+          .single()
+        subscriptionStatus = userData?.subscription_status || 'free'
+      }
+    } catch (error) {
+      console.error('Failed to get user:', error)
+    }
   }
 
   const isPaid = subscriptionStatus === 'paid_lifetime' || subscriptionStatus === 'paid_monthly'
