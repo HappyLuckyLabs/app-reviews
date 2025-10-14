@@ -35,15 +35,16 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
       const { data: { user } } = await supabase.auth.getUser()
 
       if (user && !hasAccess) {
+        // Since users table doesn't have subscription_status, check if user is admin
+        // You can add a subscription_status column later or use a different payment system
         const { data: userData } = await supabase
           .from('users')
-          .select('subscription_status')
-          .eq('id', user.id)
+          .select('is_admin')
+          .eq('email', user.email)
           .single()
 
-        const isPaid = userData?.subscription_status === 'paid_lifetime' ||
-                       userData?.subscription_status === 'paid_monthly'
-        hasAccess = isPaid
+        // For now, admins get access to all content
+        hasAccess = userData?.is_admin || false
       }
     } catch (error) {
       console.error('Error checking access:', error)

@@ -15,11 +15,11 @@ export async function GET(
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  // Check if user is admin
+  // Check if user is admin (using email as key)
   const { data: userData } = await supabase
     .from('users')
     .select('is_admin')
-    .eq('id', user.id)
+    .eq('email', user.email)
     .single()
 
   if (!userData?.is_admin) {
@@ -60,11 +60,11 @@ export async function PUT(
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  // Check if user is admin
+  // Check if user is admin (using email as key)
   const { data: userData } = await supabase
     .from('users')
     .select('is_admin')
-    .eq('id', user.id)
+    .eq('email', user.email)
     .single()
 
   if (!userData?.is_admin) {
@@ -171,11 +171,11 @@ export async function DELETE(
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  // Check if user is admin
+  // Check if user is admin (using email as key)
   const { data: userData } = await supabase
     .from('users')
     .select('is_admin')
-    .eq('id', user.id)
+    .eq('email', user.email)
     .single()
 
   if (!userData?.is_admin) {

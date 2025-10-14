@@ -12,11 +12,11 @@ export default async function AdminPage() {
     redirect('/auth/login?redirect=/admin')
   }
 
-  // Check if user is admin
+  // Check if user is admin (using email as key since users table doesn't have id)
   const { data: userData } = await supabase
     .from('users')
     .select('is_admin')
-    .eq('id', user.id)
+    .eq('email', user.email)
     .single()
 
   if (!userData?.is_admin) {
