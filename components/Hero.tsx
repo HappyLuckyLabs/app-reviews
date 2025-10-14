@@ -5,13 +5,11 @@ export default function Hero() {
     <section className="relative overflow-hidden bg-white py-20 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Hero Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center min-h-[600px]">
-          {/* Left: Text Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-16 items-center min-h-[600px]">
+          {/* Left: Text Content - 40% */}
           <div className="space-y-8">
-            <h1 className="text-7xl font-bold tracking-tight text-gray-900 sm:text-8xl lg:text-9xl leading-none">
-              Find what
-              <br />
-              works
+            <h1 className="text-7xl font-bold tracking-tight text-gray-900 sm:text-8xl lg:text-[7rem] leading-[0.9]">
+              Find what works
             </h1>
 
             <p className="text-xl text-gray-600 max-w-xl leading-relaxed">
@@ -19,14 +17,14 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* Right: Hero Image */}
+          {/* Right: Hero Image - 60% */}
           <div className="relative flex items-center justify-center">
-            <div className="relative w-full max-w-2xl">
+            <div className="relative w-full">
               <Image
                 src="/hero-image.png"
                 alt="App interface showcase"
-                width={800}
-                height={600}
+                width={1000}
+                height={750}
                 className="object-contain w-full h-auto"
                 priority
               />
