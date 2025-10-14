@@ -28,34 +28,45 @@ export default async function Header() {
   const isPaid = subscriptionStatus === 'paid_lifetime' || subscriptionStatus === 'paid_monthly'
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/80 backdrop-blur-md">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-        <Link href="/" className="text-2xl font-bold text-gray-900">
-          AppPlaybook
+    <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-white font-bold">
+            A
+          </div>
+          <span className="text-xl font-semibold text-gray-900">AppPlaybook</span>
         </Link>
 
-        <div className="flex items-center gap-6">
+        {/* Navigation */}
+        <div className="flex items-center gap-8">
+          <Link
+            href="/#case-studies"
+            className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+          >
+            Case Studies
+          </Link>
+          <Link
+            href="/pricing"
+            className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+          >
+            Pricing
+          </Link>
+
           {user ? (
             <>
-              {isPaid ? (
+              {isPaid && (
                 <Link
                   href="/dashboard"
-                  className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                  className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
                 >
                   Dashboard
-                </Link>
-              ) : (
-                <Link
-                  href="/pricing"
-                  className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 transition-colors"
-                >
-                  Unlock All
                 </Link>
               )}
               <form action="/auth/signout" method="post">
                 <button
                   type="submit"
-                  className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                  className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
                 >
                   Sign Out
                 </button>
@@ -65,15 +76,15 @@ export default async function Header() {
             <>
               <Link
                 href="/auth/login"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
               >
                 Login
               </Link>
               <Link
                 href="/auth/signup"
-                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 transition-colors"
+                className="rounded-full bg-black px-5 py-2 text-sm font-semibold text-white hover:bg-gray-800 transition-colors"
               >
-                Sign Up
+                Get Started
               </Link>
             </>
           )}
