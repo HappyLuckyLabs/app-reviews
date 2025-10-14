@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
+import { Plus, Trash2, Eye, EyeOff } from 'lucide-react'
 import ImageUpload from './ImageUpload'
+import CaseStudyPreview from './CaseStudyPreview'
 
 interface Section {
   section_id: string
@@ -92,6 +93,7 @@ interface CaseStudyEditorProps {
 export default function CaseStudyEditor({ initialData, caseStudyId }: CaseStudyEditorProps) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showPreview, setShowPreview] = useState(true)
   const [formData, setFormData] = useState<CaseStudyFormData>({
     slug: initialData?.slug || '',
     title: initialData?.title || '',
@@ -175,9 +177,24 @@ export default function CaseStudyEditor({ initialData, caseStudyId }: CaseStudyE
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      {/* Basic Info */}
-      <div className="rounded-lg bg-white p-6 shadow">
+    <div className="flex h-[calc(100vh-120px)]">
+      {/* Left: Form Editor */}
+      <div className={`${showPreview ? 'w-1/2' : 'w-full'} overflow-y-auto border-r border-gray-200 bg-white transition-all`}>
+        <form onSubmit={handleSubmit} className="p-8 space-y-8">
+          {/* Toggle Preview Button */}
+          <div className="flex items-center justify-end sticky top-0 bg-white py-2 z-10 border-b border-gray-200 -mx-8 px-8 -mt-8 mb-6">
+            <button
+              type="button"
+              onClick={() => setShowPreview(!showPreview)}
+              className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            >
+              {showPreview ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              {showPreview ? 'Hide' : 'Show'} Preview
+            </button>
+          </div>
+
+          {/* Basic Info */}
+          <div className="rounded-lg bg-gray-50 p-6 border border-gray-200">
         <h2 className="mb-4 text-xl font-semibold text-gray-900">Basic Information</h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div>
@@ -340,10 +357,10 @@ export default function CaseStudyEditor({ initialData, caseStudyId }: CaseStudyE
         </div>
       </div>
 
-      {/* Sections */}
-      {formData.sections.map((section, sectionIndex) => (
-        <div key={section.section_id} className="rounded-lg bg-white p-6 shadow">
-          <h2 className="mb-4 text-xl font-semibold text-gray-900">{section.section_label}</h2>
+          {/* Sections */}
+          {formData.sections.map((section, sectionIndex) => (
+            <div key={section.section_id} className="rounded-lg bg-gray-50 p-6 border border-gray-200">
+              <h2 className="mb-4 text-xl font-semibold text-gray-900">{section.section_label}</h2>
 
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700">Intro Text</label>
@@ -484,28 +501,37 @@ export default function CaseStudyEditor({ initialData, caseStudyId }: CaseStudyE
                   </div>
                 </div>
               ))}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
 
-      {/* Submit */}
-      <div className="flex items-center justify-end gap-4">
-        <button
-          type="button"
-          onClick={() => router.back()}
-          className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 disabled:opacity-50"
-        >
-          {isSubmitting ? 'Saving...' : caseStudyId ? 'Update Case Study' : 'Create Case Study'}
-        </button>
+          {/* Submit */}
+          <div className="flex items-center justify-end gap-4 sticky bottom-0 bg-white py-4 border-t border-gray-200 -mx-8 px-8">
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 disabled:opacity-50"
+            >
+              {isSubmitting ? 'Saving...' : caseStudyId ? 'Update Case Study' : 'Create Case Study'}
+            </button>
+          </div>
+        </form>
       </div>
-    </form>
+
+      {/* Right: Live Preview */}
+      {showPreview && (
+        <div className="w-1/2 overflow-hidden">
+          <CaseStudyPreview formData={formData} />
+        </div>
+      )}
+    </div>
   )
 }

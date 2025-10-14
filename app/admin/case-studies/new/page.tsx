@@ -26,26 +26,18 @@ export default async function NewCaseStudyPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mb-6">
-          <Link
-            href="/admin"
-            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Dashboard
-          </Link>
-        </div>
-
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Create New Case Study</h1>
-          <p className="mt-2 text-sm text-gray-600">
-            Add a new app case study to your collection
-          </p>
-        </div>
-
-        <CaseStudyEditor />
+      <div className="border-b border-gray-200 bg-white px-8 py-4">
+        <Link
+          href="/admin"
+          className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Dashboard
+        </Link>
+        <h1 className="mt-3 text-2xl font-bold text-gray-900">Create New Case Study</h1>
       </div>
+
+      <CaseStudyEditor />
     </div>
   )
 }
