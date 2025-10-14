@@ -32,6 +32,7 @@ export async function getCaseStudiesFromDB(): Promise<CaseStudyWithSections[]> {
         screenshots:case_study_screenshots(*)
       )
     `)
+    .eq('status', 'published')
     .order('published_at', { ascending: false })
 
   if (error) {
@@ -65,7 +66,7 @@ export async function getCaseStudyBySlugFromDB(slug: string): Promise<CaseStudyW
     return null
   }
 
-  const { data, error } = await supabase
+  const { data, error} = await supabase
     .from('case_studies')
     .select(`
       *,
@@ -76,6 +77,7 @@ export async function getCaseStudyBySlugFromDB(slug: string): Promise<CaseStudyW
       )
     `)
     .eq('slug', slug)
+    .eq('status', 'published')
     .single()
 
   if (error) {

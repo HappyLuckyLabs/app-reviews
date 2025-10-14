@@ -33,6 +33,7 @@ interface CaseStudyFormData {
   founder_type: string
   business_model: string
   is_free: boolean
+  status: 'draft' | 'ready_to_review' | 'published'
   description: string
   app_icon: string
   rating: number | null
@@ -103,6 +104,7 @@ export default function CaseStudyEditor({ initialData, caseStudyId }: CaseStudyE
     founder_type: initialData?.founder_type || '',
     business_model: initialData?.business_model || '',
     is_free: initialData?.is_free || false,
+    status: (initialData?.status as 'draft' | 'ready_to_review' | 'published') || 'draft',
     description: initialData?.description || '',
     app_icon: initialData?.app_icon || '',
     rating: initialData?.rating || null,
@@ -323,7 +325,20 @@ export default function CaseStudyEditor({ initialData, caseStudyId }: CaseStudyE
           </div>
 
           <div>
-            <label className="flex items-center">
+            <label className="block text-sm font-medium text-gray-700">Status</label>
+            <select
+              value={formData.status}
+              onChange={(e) => setFormData({ ...formData, status: e.target.value as 'draft' | 'ready_to_review' | 'published' })}
+              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500"
+            >
+              <option value="draft">Draft</option>
+              <option value="ready_to_review">Ready to Review</option>
+              <option value="published">Published</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="flex items-center mt-6">
               <input
                 type="checkbox"
                 checked={formData.is_free}

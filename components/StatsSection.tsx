@@ -55,18 +55,15 @@ export default function StatsSection() {
               }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="text-5xl sm:text-6xl font-bold text-gray-900 mb-3 flex items-baseline gap-1">
-                {stat.label === 'Combined Revenue' && <span className="text-5xl sm:text-6xl">$</span>}
+              <div className="text-5xl sm:text-6xl font-bold text-gray-900 mb-3 flex items-center gap-2">
+                {stat.label === 'Combined Revenue' && <span>$</span>}
                 <Counter
                   value={startCount ? stat.value : 0}
-                  places={stat.places || [10, 1]}
-                  fontSize={48}
-                  padding={0}
-                  gap={4}
+                  fontSize={56}
                   textColor="#111827"
                   fontWeight={900}
                 />
-                <span className="text-5xl sm:text-6xl">{stat.suffix}</span>
+                <span>{stat.suffix}</span>
               </div>
               <div className="text-base text-gray-600">{stat.label}</div>
             </div>

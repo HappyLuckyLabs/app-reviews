@@ -17,11 +17,11 @@ export default async function Home() {
       <StatsSection />
 
       {/* Free Case Studies Section */}
-      <section id="case-studies" className="py-16 bg-white">
+      <section id="case-studies" className="py-24 bg-white">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Free Case Studies</h2>
-            <p className="mt-2 text-lg text-gray-600">
+          <div className="mb-16">
+            <h2 className="text-5xl sm:text-6xl font-black text-gray-900 mb-4">Free Case Studies</h2>
+            <p className="text-xl text-gray-600">
               Get started with these detailed app analyses—completely free
             </p>
           </div>
@@ -35,20 +35,20 @@ export default async function Home() {
       </section>
 
       {/* Locked Case Studies Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-24 bg-gray-50">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mb-8 flex items-center justify-between">
+          <div className="mb-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900">
-                Unlock {lockedCaseStudies.length}+ More Case Studies
+              <h2 className="text-5xl sm:text-6xl font-black text-gray-900 mb-4">
+                Unlock {lockedCaseStudies.length}+ More
               </h2>
-              <p className="mt-2 text-lg text-gray-600">
+              <p className="text-xl text-gray-600">
                 Get instant access to the entire playbook database
               </p>
             </div>
             <Link
               href="/pricing"
-              className="flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white hover:bg-blue-500 transition-colors"
+              className="flex items-center gap-2 rounded-full bg-gray-900 px-8 py-4 text-base font-semibold text-white hover:bg-gray-800 transition-colors whitespace-nowrap"
             >
               Unlock All
               <ArrowRight className="h-5 w-5" />
@@ -62,16 +62,16 @@ export default async function Home() {
           </div>
 
           {/* CTA Banner */}
-          <div className="mt-12 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-12 text-center">
-            <h3 className="text-2xl font-bold text-white sm:text-3xl">
+          <div className="mt-16 rounded-3xl bg-gray-900 px-8 sm:px-12 py-16 sm:py-20 text-center">
+            <h3 className="text-4xl sm:text-5xl font-black text-white mb-6">
               Ready to learn from the best?
             </h3>
-            <p className="mt-4 text-lg text-blue-100">
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
               Get lifetime access for just $20, or subscribe monthly for $14
             </p>
             <Link
               href="/pricing"
-              className="mt-8 inline-flex items-center gap-2 rounded-lg bg-white px-8 py-4 text-base font-semibold text-blue-600 hover:bg-gray-100 transition-colors"
+              className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-10 py-5 text-lg font-bold text-gray-900 hover:bg-gray-100 transition-colors"
             >
               View Pricing
               <ArrowRight className="h-5 w-5" />
@@ -81,24 +81,24 @@ export default async function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white py-12">
+      <footer className="border-t border-gray-200 bg-white py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-            <p className="text-sm text-gray-500">
+          <div className="flex flex-col items-center justify-between gap-8 sm:flex-row">
+            <p className="text-base font-semibold text-gray-500">
               © 2024 AppPlaybook. All rights reserved.
             </p>
-            <div className="flex gap-6">
-              <Link href="/about" className="text-sm text-gray-500 hover:text-gray-900">
+            <div className="flex gap-8">
+              <Link href="/about" className="text-base font-semibold text-gray-500 hover:text-gray-900 transition-colors">
                 About
               </Link>
-              <Link href="/contact" className="text-sm text-gray-500 hover:text-gray-900">
+              <Link href="/contact" className="text-base font-semibold text-gray-500 hover:text-gray-900 transition-colors">
                 Contact
               </Link>
               <a
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-gray-500 hover:text-gray-900"
+                className="text-base font-semibold text-gray-500 hover:text-gray-900 transition-colors"
               >
                 Twitter
               </a>

@@ -23,10 +23,11 @@ export default async function AdminPage() {
     redirect('/')
   }
 
-  // Fetch all case studies
+  // Fetch all case studies with status
   const { data: caseStudies } = await supabase
     .from('case_studies')
     .select('*')
+    .order('status', { ascending: true })
     .order('published_at', { ascending: false })
 
   return (
@@ -49,23 +50,29 @@ export default async function AdminPage() {
         </div>
 
         {/* Stats */}
-        <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-4">
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-            <dt className="truncate text-sm font-medium text-gray-500">Total Case Studies</dt>
+            <dt className="truncate text-sm font-medium text-gray-500">Total</dt>
             <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
               {caseStudies?.length || 0}
             </dd>
           </div>
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-            <dt className="truncate text-sm font-medium text-gray-500">Free Case Studies</dt>
-            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
-              {caseStudies?.filter(cs => cs.is_free).length || 0}
+            <dt className="truncate text-sm font-medium text-gray-500">Draft</dt>
+            <dd className="mt-1 text-3xl font-semibold tracking-tight text-orange-600">
+              {caseStudies?.filter(cs => cs.status === 'draft').length || 0}
             </dd>
           </div>
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-            <dt className="truncate text-sm font-medium text-gray-500">Premium Case Studies</dt>
-            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
-              {caseStudies?.filter(cs => !cs.is_free).length || 0}
+            <dt className="truncate text-sm font-medium text-gray-500">Ready to Review</dt>
+            <dd className="mt-1 text-3xl font-semibold tracking-tight text-blue-600">
+              {caseStudies?.filter(cs => cs.status === 'ready_to_review').length || 0}
+            </dd>
+          </div>
+          <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+            <dt className="truncate text-sm font-medium text-gray-500">Published</dt>
+            <dd className="mt-1 text-3xl font-semibold tracking-tight text-green-600">
+              {caseStudies?.filter(cs => cs.status === 'published').length || 0}
             </dd>
           </div>
         </div>
@@ -88,13 +95,13 @@ export default async function AdminPage() {
                     Category
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                    Revenue
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
                     Status
                   </th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                    Published
+                    Access
+                  </th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                    Updated
                   </th>
                   <th scope="col" className="relative px-6 py-3">
                     <span className="sr-only">Edit</span>
@@ -121,20 +128,28 @@ export default async function AdminPage() {
                       <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                         {caseStudy.category}
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                        {caseStudy.revenue}
+                      <td className="whitespace-nowrap px-6 py-4">
+                        <span className={`inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ${
+                          caseStudy.status === 'draft'
+                            ? 'bg-orange-100 text-orange-800'
+                            : caseStudy.status === 'ready_to_review'
+                            ? 'bg-blue-100 text-blue-800'
+                            : 'bg-green-100 text-green-800'
+                        }`}>
+                          {caseStudy.status === 'ready_to_review' ? 'Review' : caseStudy.status}
+                        </span>
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
                         <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
                           caseStudy.is_free
                             ? 'bg-green-100 text-green-800'
-                            : 'bg-blue-100 text-blue-800'
+                            : 'bg-purple-100 text-purple-800'
                         }`}>
                           {caseStudy.is_free ? 'Free' : 'Premium'}
                         </span>
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                        {new Date(caseStudy.published_at).toLocaleDateString()}
+                        {new Date(caseStudy.updated_at || caseStudy.published_at).toLocaleDateString()}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                         <Link

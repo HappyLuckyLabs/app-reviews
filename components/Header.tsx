@@ -39,16 +39,16 @@ export default async function Header() {
         </Link>
 
         {/* Navigation */}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-6">
           <Link
             href="/#case-studies"
-            className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+            className="text-base font-medium text-gray-900 hover:text-gray-600 transition-colors"
           >
             Case Studies
           </Link>
           <Link
             href="/pricing"
-            className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+            className="text-base font-medium text-gray-900 hover:text-gray-600 transition-colors"
           >
             Pricing
           </Link>
@@ -58,7 +58,7 @@ export default async function Header() {
               {isPaid && (
                 <Link
                   href="/dashboard"
-                  className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                  className="text-base font-medium text-gray-900 hover:text-gray-600 transition-colors"
                 >
                   Dashboard
                 </Link>
@@ -66,7 +66,7 @@ export default async function Header() {
               <form action="/auth/signout" method="post">
                 <button
                   type="submit"
-                  className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                  className="text-base font-medium text-gray-900 hover:text-gray-600 transition-colors"
                 >
                   Sign Out
                 </button>
@@ -76,13 +76,13 @@ export default async function Header() {
             <>
               <Link
                 href="/auth/login"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                className="text-base font-medium text-gray-900 hover:text-gray-600 transition-colors"
               >
                 Login
               </Link>
               <Link
                 href="/auth/signup"
-                className="rounded-full bg-black px-5 py-2 text-sm font-semibold text-white hover:bg-gray-800 transition-colors"
+                className="rounded-full bg-gray-900 px-6 py-2.5 text-base font-semibold text-white hover:bg-gray-700 transition-colors"
               >
                 Get Started
               </Link>

@@ -39,7 +39,7 @@ export function ScreenTag({ index, onClick }: { index: number; onClick: () => vo
   return (
     <button
       onClick={onClick}
-      className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 hover:bg-blue-200 transition-colors cursor-pointer"
+      className="inline-flex items-center gap-1 rounded-full bg-gray-900 px-4 py-2 text-xs font-bold text-white hover:bg-gray-700 transition-colors cursor-pointer uppercase tracking-wide"
     >
       Screen {index + 1}
     </button>
@@ -77,60 +77,60 @@ export default function CaseStudyLayout({
           <div className="flex items-start gap-6">
             {/* App Icon */}
             {metadata.appIcon && (
-              <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 text-3xl font-bold text-white shadow-lg">
+              <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-3xl bg-gray-900 text-4xl font-black text-white shadow-lg">
                 {metadata.appIcon}
               </div>
             )}
 
             {/* Title & Category */}
             <div className="flex-1">
-              <h1 className="text-2xl font-bold text-gray-900">{metadata.title}</h1>
-              <p className="mt-1 text-sm text-gray-600">{metadata.category}</p>
+              <h1 className="text-3xl font-black text-gray-900">{metadata.title}</h1>
+              <p className="mt-2 text-sm font-semibold text-gray-500 uppercase tracking-wide">{metadata.category}</p>
             </div>
 
             {/* Stats Grid */}
             <div className="flex gap-8">
               {metadata.rating && (
                 <div>
-                  <div className="text-xs text-gray-500">Rating</div>
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Rating</div>
                   <div className="mt-1 flex items-center gap-1">
-                    <div className="flex text-sm">
+                    <div className="flex text-base">
                       {[...Array(5)].map((_, i) => (
                         <span key={i} className={i < Math.floor(metadata.rating!) ? 'text-yellow-400' : 'text-gray-300'}>
                           ★
                         </span>
                       ))}
                     </div>
-                    <span className="text-sm font-semibold text-gray-900">{metadata.rating}</span>
+                    <span className="text-base font-black text-gray-900">{metadata.rating}</span>
                   </div>
                 </div>
               )}
 
               <div>
-                <div className="text-xs text-gray-500">Revenue/mo</div>
-                <div className="mt-1 text-sm font-semibold text-gray-900">{metadata.revenue}</div>
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Revenue/mo</div>
+                <div className="mt-1 text-base font-black text-gray-900">{metadata.revenue}</div>
               </div>
 
               <div>
-                <div className="text-xs text-gray-500">Installs/mo</div>
-                <div className="mt-1 text-sm font-semibold text-gray-900">{metadata.downloads}</div>
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Installs/mo</div>
+                <div className="mt-1 text-base font-black text-gray-900">{metadata.downloads}</div>
               </div>
 
               {metadata.onboardingSteps && (
                 <div>
-                  <div className="text-xs text-gray-500">Onboarding</div>
-                  <div className="mt-1 text-sm font-semibold text-gray-900">{metadata.onboardingSteps} steps</div>
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Onboarding</div>
+                  <div className="mt-1 text-base font-black text-gray-900">{metadata.onboardingSteps} steps</div>
                 </div>
               )}
 
               <div>
-                <div className="text-xs text-gray-500">Business Model</div>
-                <div className="mt-1 text-sm font-semibold text-gray-900">{metadata.businessModel}</div>
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Business Model</div>
+                <div className="mt-1 text-base font-black text-gray-900">{metadata.businessModel}</div>
               </div>
 
               <div>
-                <div className="text-xs text-gray-500">Founder Type</div>
-                <div className="mt-1 text-sm font-semibold text-gray-900">{metadata.founderType}</div>
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Founder Type</div>
+                <div className="mt-1 text-base font-black text-gray-900">{metadata.founderType}</div>
               </div>
             </div>
           </div>
@@ -141,16 +141,16 @@ export default function CaseStudyLayout({
       <main className="flex-1">
         {/* Section Tabs */}
         <div className="sticky top-0 z-10 border-b border-gray-200 bg-white">
-          <div className="mx-auto max-w-7xl px-8">
+          <div className="px-8">
             <div className="flex gap-1 overflow-x-auto">
               {sections.map((section) => (
                 <button
                   key={section.id}
                   onClick={() => setActiveSection(section.id)}
-                  className={`px-6 py-4 text-sm font-medium transition-colors whitespace-nowrap ${
+                  className={`px-6 py-4 text-base font-bold transition-colors whitespace-nowrap ${
                     activeSection === section.id
-                      ? 'border-b-2 border-blue-600 text-blue-600'
-                      : 'text-gray-600 hover:text-gray-900'
+                      ? 'border-b-2 border-gray-900 text-gray-900'
+                      : 'text-gray-500 hover:text-gray-900'
                   }`}
                 >
                   {section.label}
@@ -164,19 +164,19 @@ export default function CaseStudyLayout({
         <div className="flex h-[calc(100vh-180px)]">
           {!hasAccess ? (
             <div className="flex-1 flex items-center justify-center p-12">
-              <div className="rounded-2xl border-2 border-gray-200 bg-white p-12 text-center max-w-2xl">
-                <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-blue-100">
-                  <Lock className="h-10 w-10 text-blue-600" />
+              <div className="rounded-3xl border-2 border-gray-200 bg-white p-16 text-center max-w-2xl">
+                <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
+                  <Lock className="h-12 w-12 text-gray-900" />
                 </div>
-                <h2 className="mb-4 text-3xl font-bold text-gray-900">
+                <h2 className="mb-6 text-4xl font-black text-gray-900">
                   Unlock Full Analysis
                 </h2>
-                <p className="mb-8 text-lg text-gray-600">
+                <p className="mb-10 text-xl text-gray-600 leading-relaxed">
                   Get access to detailed UX breakdowns, growth tactics, and monetization strategies
                 </p>
                 <a
                   href="/pricing"
-                  className="inline-block rounded-lg bg-blue-600 px-8 py-4 text-base font-semibold text-white hover:bg-blue-500 transition-colors"
+                  className="inline-block rounded-full bg-gray-900 px-10 py-5 text-lg font-bold text-white hover:bg-gray-700 transition-colors"
                 >
                   Get Full Access
                 </a>
@@ -184,8 +184,8 @@ export default function CaseStudyLayout({
             </div>
           ) : (
             <>
-              {/* Left Panel - Analysis */}
-              <div className="flex-1 overflow-y-auto border-r border-gray-200 bg-white p-8">
+              {/* Left Panel - Analysis (60%) */}
+              <div className="w-[60%] overflow-y-auto border-r border-gray-200 bg-white p-8">
                 <div className="prose prose-gray max-w-none">
                   <CaseStudyAnalysisDynamic
                     sectionId={activeSection}
@@ -195,8 +195,8 @@ export default function CaseStudyLayout({
                 </div>
               </div>
 
-              {/* Right Panel - Screenshots (Horizontal Scroll) */}
-              <div className="w-[640px] flex-shrink-0 bg-gray-50">
+              {/* Right Panel - Screenshots (40%) */}
+              <div className="w-[40%] flex-shrink-0 bg-gray-50">
                 <div
                   ref={scrollContainerRef}
                   className="h-full overflow-x-auto overflow-y-hidden p-8"
