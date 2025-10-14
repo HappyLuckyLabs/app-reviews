@@ -12,6 +12,30 @@ export default async function Home() {
     <div className="min-h-screen bg-white">
       <Hero />
 
+      {/* Stats Section */}
+      <section className="py-16 bg-gray-50 border-y border-gray-200">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+            <div>
+              <div className="text-4xl font-bold text-gray-900">12+</div>
+              <div className="mt-2 text-sm text-gray-600">Case Studies</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-gray-900">$10M+</div>
+              <div className="mt-2 text-sm text-gray-600">Combined Revenue</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-gray-900">50M+</div>
+              <div className="mt-2 text-sm text-gray-600">Total Downloads</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-gray-900">100%</div>
+              <div className="mt-2 text-sm text-gray-600">Actionable Insights</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Free Case Studies Section */}
       <section id="case-studies" className="py-16 bg-white">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
