@@ -18,13 +18,13 @@ export default function Hero() {
           </div>
 
           {/* Right: Hero Image - 60% */}
-          <div className="relative flex items-center justify-center">
-            <div className="relative w-full">
+          <div className="relative flex items-center justify-center -mr-8">
+            <div className="relative w-full scale-110">
               <Image
                 src="/hero-image.png"
                 alt="App interface showcase"
-                width={1000}
-                height={750}
+                width={1200}
+                height={900}
                 className="object-contain w-full h-auto"
                 priority
               />
