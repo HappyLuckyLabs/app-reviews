@@ -5,10 +5,10 @@ export default function Hero() {
     <section className="relative overflow-hidden bg-white py-20 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Hero Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-16 items-center min-h-[600px]">
+        <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-16 items-center min-h-[700px]">
           {/* Left: Text Content - 40% */}
           <div className="space-y-8">
-            <h1 className="text-7xl font-bold tracking-tight text-gray-900 sm:text-8xl lg:text-[7rem] leading-[0.9]">
+            <h1 className="text-8xl font-black tracking-tight text-gray-900 sm:text-9xl lg:text-[10rem] leading-[0.85]">
               Find what works
             </h1>
 
