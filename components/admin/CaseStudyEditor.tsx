@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Plus, Trash2, ChevronUp, ChevronDown } from 'lucide-react'
+import ImageUpload from './ImageUpload'
 
 interface Section {
   section_id: string
@@ -436,38 +437,51 @@ export default function CaseStudyEditor({ initialData, caseStudyId }: CaseStudyE
                 Add Screenshot
               </button>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-6">
               {section.screenshots.map((screenshot, screenshotIndex) => (
-                <div key={screenshotIndex} className="flex gap-2">
-                  <input
-                    type="text"
-                    value={screenshot.url}
-                    onChange={(e) => {
-                      const newSections = [...formData.sections]
-                      newSections[sectionIndex].screenshots[screenshotIndex].url = e.target.value
-                      setFormData({ ...formData, sections: newSections })
-                    }}
-                    placeholder="Screenshot URL or placeholder text"
-                    className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm"
-                  />
-                  <input
-                    type="text"
-                    value={screenshot.title}
-                    onChange={(e) => {
-                      const newSections = [...formData.sections]
-                      newSections[sectionIndex].screenshots[screenshotIndex].title = e.target.value
-                      setFormData({ ...formData, sections: newSections })
-                    }}
-                    placeholder="Title/caption"
-                    className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeScreenshot(sectionIndex, screenshotIndex)}
-                    className="text-red-600 hover:text-red-500"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
+                <div key={screenshotIndex} className="rounded-md border border-gray-200 p-4">
+                  <div className="mb-4 flex items-center justify-between">
+                    <h4 className="text-sm font-medium text-gray-700">Screenshot {screenshotIndex + 1}</h4>
+                    <button
+                      type="button"
+                      onClick={() => removeScreenshot(sectionIndex, screenshotIndex)}
+                      className="text-red-600 hover:text-red-500"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Image</label>
+                    <ImageUpload
+                      value={screenshot.url}
+                      onChange={(url) => {
+                        const newSections = [...formData.sections]
+                        newSections[sectionIndex].screenshots[screenshotIndex].url = url
+                        setFormData({ ...formData, sections: newSections })
+                      }}
+                      onRemove={() => {
+                        const newSections = [...formData.sections]
+                        newSections[sectionIndex].screenshots[screenshotIndex].url = ''
+                        setFormData({ ...formData, sections: newSections })
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Caption</label>
+                    <input
+                      type="text"
+                      value={screenshot.title}
+                      onChange={(e) => {
+                        const newSections = [...formData.sections]
+                        newSections[sectionIndex].screenshots[screenshotIndex].title = e.target.value
+                        setFormData({ ...formData, sections: newSections })
+                      }}
+                      placeholder="Screenshot caption or title"
+                      className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    />
+                  </div>
                 </div>
               ))}
             </div>
