@@ -1,21 +1,25 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Counter from './Counter'
 
 interface Stat {
-  value: string
+  value: number
+  suffix: string
   label: string
+  places?: number[]
 }
 
 const stats: Stat[] = [
-  { value: '12+', label: 'Case Studies' },
-  { value: '$10M+', label: 'Combined Revenue' },
-  { value: '50M+', label: 'Total Downloads' },
-  { value: '100%', label: 'Actionable Insights' },
+  { value: 12, suffix: '+', label: 'Case Studies', places: [10, 1] },
+  { value: 10, suffix: 'M+', label: 'Combined Revenue', places: [10, 1] },
+  { value: 50, suffix: 'M+', label: 'Total Downloads', places: [10, 1] },
+  { value: 100, suffix: '%', label: 'Actionable Insights', places: [100, 10, 1] },
 ]
 
 export default function StatsSection() {
   const [isVisible, setIsVisible] = useState(false)
+  const [startCount, setStartCount] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -23,6 +27,8 @@ export default function StatsSection() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
+          // Delay the counter start slightly for better effect
+          setTimeout(() => setStartCount(true), 200)
         }
       },
       { threshold: 0.2 }
@@ -49,8 +55,18 @@ export default function StatsSection() {
               }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="text-5xl sm:text-6xl font-bold text-gray-900 mb-3">
-                {stat.value}
+              <div className="text-5xl sm:text-6xl font-bold text-gray-900 mb-3 flex items-baseline gap-1">
+                {stat.label === 'Combined Revenue' && <span className="text-5xl sm:text-6xl">$</span>}
+                <Counter
+                  value={startCount ? stat.value : 0}
+                  places={stat.places || [10, 1]}
+                  fontSize={48}
+                  padding={0}
+                  gap={4}
+                  textColor="#111827"
+                  fontWeight={900}
+                />
+                <span className="text-5xl sm:text-6xl">{stat.suffix}</span>
               </div>
               <div className="text-base text-gray-600">{stat.label}</div>
             </div>
